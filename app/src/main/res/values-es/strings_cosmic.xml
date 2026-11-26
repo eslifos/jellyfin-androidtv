@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Jellyfin Cosmic: titles of the home rows prepared by the server (HomeFeed) -->
+<!-- Jellyfin Cosmic: texts of the home prepared by the server (HomeFeed), the same as its web home -->
 <resources>
     <string name="cosmic_row_top10movies">Top 10 películas</string>
     <string name="cosmic_row_top10series">Top 10 series</string>
@@ -22,11 +22,28 @@
     <string name="cosmic_row_latestbooks">Recién agregados</string>
     <string name="cosmic_row_discoverbooks">Descubre</string>
     <string name="cosmic_row_discovervideos">Descubre</string>
-    <string name="cosmic_row_continue">Seguir viendo</string>
-    <string name="cosmic_row_nextup">Siguiente episodio</string>
-    <string name="cosmic_row_listening">Seguir escuchando</string>
-    <string name="cosmic_row_favorites">Favoritos</string>
-    <string name="cosmic_row_spotlight" formatted="true">¿Qué vemos hoy en %1$s?</string>
-    <string name="cosmic_row_spotlight_books" formatted="true">¿Qué escuchamos hoy en %1$s?</string>
-    <string name="cosmic_row_in_library" formatted="true">%1$s · %2$s</string>
+    <string name="cosmic_continue">Seguir viendo</string>
+    <string name="cosmic_nextup">Siguiente episodio</string>
+    <string name="cosmic_listening">Seguir escuchando</string>
+    <string name="cosmic_favorites">Favoritos</string>
+    <string name="cosmic_spotlight">¿Qué vemos hoy?</string>
+    <string name="cosmic_spotlight_help">Una recomendación bien calificada que aún no has visto</string>
+    <string name="cosmic_spotlight_in">¿Qué vemos hoy en %1$s?</string>
+    <string name="cosmic_listen_today_in">¿Qué escuchamos hoy en %1$s?</string>
+    <string name="cosmic_another">Otra</string>
+    <string name="cosmic_play">Reproducir</string>
+    <string name="cosmic_info">Más info</string>
+    <string name="cosmic_see_all">Ver todo</string>
+    <string name="cosmic_top_hint">Lo más visto esta semana</string>
+    <string name="cosmic_upcoming">Próximos estrenos</string>
+    <string name="cosmic_upcoming_hint">De tus series y sagas, en las próximas 3 semanas</string>
+    <string name="cosmic_genres">Explorar por género</string>
+    <string name="cosmic_on_air">En emisión</string>
+    <string name="cosmic_new_series">Serie nueva</string>
+    <string name="cosmic_new_episode">Episodio nuevo</string>
+    <string name="cosmic_new_episodes">%1$d episodios nuevos</string>
+    <string name="cosmic_new_movie">Estreno</string>
+    <string name="cosmic_left_minutes">Quedan %1$d min</string>
+    <string name="cosmic_left_hours">Quedan %1$d h %2$d min</string>
+    <string name="cosmic_preparing">Estamos preparando tu Inicio, en un momento aparecen los Top 10 y las novedades…</string>
 </resources>

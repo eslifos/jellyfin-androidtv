@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.compose.foundation.focusGroup
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,6 +29,10 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import org.jellyfin.androidtv.auth.repository.ServerRepository
 import org.jellyfin.androidtv.auth.repository.SessionRepository
+import org.jellyfin.androidtv.data.cosmic.CosmicHomePage
+import org.jellyfin.androidtv.data.cosmic.CosmicHomeRepository
+import org.jellyfin.androidtv.ui.home.cosmic.CosmicHomeScreen
+import org.jellyfin.androidtv.ui.home.cosmic.CosmicHomeSkeleton
 import org.jellyfin.androidtv.data.repository.NotificationsRepository
 import org.jellyfin.androidtv.ui.shared.toolbar.MainToolbar
 import org.jellyfin.androidtv.ui.shared.toolbar.MainToolbarActiveButton
@@ -37,12 +42,41 @@ class HomeFragment : Fragment() {
 	private val sessionRepository by inject<SessionRepository>()
 	private val serverRepository by inject<ServerRepository>()
 	private val notificationRepository by inject<NotificationsRepository>()
+	private val cosmicHomeRepository by inject<CosmicHomeRepository>()
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
 	) = content {
+		// A Jellyfin Cosmic server prepares the whole home: then it is drawn like its web home
+		var cosmic by remember {
+			mutableStateOf<CosmicHome>(cosmicHomeRepository.cachedPage()?.let { CosmicHome.Cosmic(it) } ?: CosmicHome.Loading)
+		}
+		LaunchedEffect(Unit) {
+			val page = cosmicHomeRepository.getPage()
+			cosmic = when {
+				page != null -> CosmicHome.Cosmic(page)
+				cosmic is CosmicHome.Cosmic -> cosmic
+				else -> CosmicHome.Official
+			}
+		}
+
+		when (val state = cosmic) {
+			CosmicHome.Loading -> CosmicHomeSkeleton()
+			is CosmicHome.Cosmic -> CosmicHomeScreen(state.page) { MainToolbar(MainToolbarActiveButton.Home) }
+			CosmicHome.Official -> LeanbackHome()
+		}
+	}
+
+	private sealed interface CosmicHome {
+		data object Loading : CosmicHome
+		data class Cosmic(val page: CosmicHomePage) : CosmicHome
+		data object Official : CosmicHome
+	}
+
+	@Composable
+	private fun LeanbackHome() {
 		val rowsFocusRequester = remember { FocusRequester() }
 		LaunchedEffect(rowsFocusRequester) { rowsFocusRequester.requestFocus() }
 
