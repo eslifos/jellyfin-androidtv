@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Jellyfin Cosmic: titles of the home rows prepared by the server (HomeFeed) -->
+<resources>
+    <string name="cosmic_row_top10movies">Top 10 películas</string>
+    <string name="cosmic_row_top10series">Top 10 series</string>
+    <string name="cosmic_row_latestmovies">Recién agregadas</string>
+    <string name="cosmic_row_latest">Recién agregado</string>
+    <string name="cosmic_row_releases">Estrenos del último año</string>
+    <string name="cosmic_row_toprated">Mejor valoradas</string>
+    <string name="cosmic_row_gems">Joyas por descubrir</string>
+    <string name="cosmic_row_classics">Clásicos imperdibles</string>
+    <string name="cosmic_row_newepisodes">Episodios nuevos</string>
+    <string name="cosmic_row_newseries">Series nuevas</string>
+    <string name="cosmic_row_onair">En emisión</string>
+    <string name="cosmic_row_marathon">Para maratonear</string>
+    <string name="cosmic_row_movies">Películas</string>
+    <string name="cosmic_row_newalbums">Álbumes nuevos</string>
+    <string name="cosmic_row_artists">Artistas</string>
+    <string name="cosmic_row_discoveralbums">Descubre álbumes</string>
+    <string name="cosmic_row_mostplayed">Lo que más escuchas</string>
+    <string name="cosmic_row_recentplayed">Escuchado recientemente</string>
+    <string name="cosmic_row_latestbooks">Recién agregados</string>
+    <string name="cosmic_row_discoverbooks">Descubre</string>
+    <string name="cosmic_row_discovervideos">Descubre</string>
+    <string name="cosmic_row_continue">Seguir viendo</string>
+    <string name="cosmic_row_nextup">Siguiente episodio</string>
+    <string name="cosmic_row_listening">Seguir escuchando</string>
+    <string name="cosmic_row_favorites">Favoritos</string>
+    <string name="cosmic_row_spotlight" formatted="true">¿Qué vemos hoy en %1$s?</string>
+    <string name="cosmic_row_spotlight_books" formatted="true">¿Qué escuchamos hoy en %1$s?</string>
+    <string name="cosmic_row_in_library" formatted="true">%1$s · %2$s</string>
+</resources>

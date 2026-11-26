@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Jellyfin Cosmic: titles of the home rows prepared by the server (HomeFeed) -->
+<resources>
+    <string name="cosmic_row_top10movies">Top 10 movies</string>
+    <string name="cosmic_row_top10series">Top 10 series</string>
+    <string name="cosmic_row_latestmovies">Recently added</string>
+    <string name="cosmic_row_latest">Recently added</string>
+    <string name="cosmic_row_releases">Releases of the last year</string>
+    <string name="cosmic_row_toprated">Top rated</string>
+    <string name="cosmic_row_gems">Hidden gems</string>
+    <string name="cosmic_row_classics">Must-see classics</string>
+    <string name="cosmic_row_newepisodes">New episodes</string>
+    <string name="cosmic_row_newseries">New series</string>
+    <string name="cosmic_row_onair">On air</string>
+    <string name="cosmic_row_marathon">Binge-worthy</string>
+    <string name="cosmic_row_movies">Movies</string>
+    <string name="cosmic_row_newalbums">New albums</string>
+    <string name="cosmic_row_artists">Artists</string>
+    <string name="cosmic_row_discoveralbums">Discover albums</string>
+    <string name="cosmic_row_mostplayed">Most played</string>
+    <string name="cosmic_row_recentplayed">Recently played</string>
+    <string name="cosmic_row_latestbooks">Recently added</string>
+    <string name="cosmic_row_discoverbooks">Discover</string>
+    <string name="cosmic_row_discovervideos">Discover</string>
+    <string name="cosmic_row_continue">Continue watching</string>
+    <string name="cosmic_row_nextup">Next up</string>
+    <string name="cosmic_row_listening">Continue listening</string>
+    <string name="cosmic_row_favorites">Favorites</string>
+    <string name="cosmic_row_spotlight" formatted="true">What should we watch today in %1$s?</string>
+    <string name="cosmic_row_spotlight_books" formatted="true">What should we listen to today in %1$s?</string>
+    <string name="cosmic_row_in_library" formatted="true">%1$s · %2$s</string>
+</resources>

@@ -29,6 +29,7 @@ import org.jellyfin.androidtv.constant.CustomMessage
 import org.jellyfin.androidtv.constant.HomeSectionType
 import org.jellyfin.androidtv.constant.LiveTvOption
 import org.jellyfin.androidtv.constant.QueryType
+import org.jellyfin.androidtv.data.cosmic.CosmicHomeRepository
 import org.jellyfin.androidtv.data.model.DataRefreshService
 import org.jellyfin.androidtv.data.repository.CustomMessageRepository
 import org.jellyfin.androidtv.data.repository.NotificationsRepository
@@ -75,8 +76,13 @@ class HomeRowsFragment : RowsSupportFragment(), AudioEventListener, View.OnKeyLi
 	private val navigationRepository by inject<NavigationRepository>()
 	private val itemLauncher by inject<ItemLauncher>()
 	private val keyProcessor by inject<KeyProcessor>()
+	private val cosmicHomeRepository by inject<CosmicHomeRepository>()
 
 	private val helper by lazy { HomeFragmentHelper(requireContext(), userRepository, userPreferences) }
+	private val cosmicHomeRows by lazy { CosmicHomeRows(requireContext().applicationContext, cosmicHomeRepository) }
+
+	// Rows of the home prepared by a Jellyfin Cosmic server, empty on other servers
+	private var cosmicRows: List<HomeFragmentCosmicRow> = emptyList()
 
 	// Data
 	private var currentItem: BaseRowItem? = null
@@ -106,8 +112,21 @@ class HomeRowsFragment : RowsSupportFragment(), AudioEventListener, View.OnKeyLi
 			// Check for coroutine cancellation
 			if (!isActive) return@launch
 
+			// A Jellyfin Cosmic server prepares the whole home: libraries first, then its rows, then live TV
+			val cosmic = cosmicHomeRows.load()
+			if (cosmic != null) {
+				cosmicRows = cosmic
+				if (HomeSectionType.LIBRARY_BUTTONS in homesections) rows.add(HomeFragmentViewsRow(small = true))
+				else rows.add(HomeFragmentViewsRow(small = false))
+				rows.addAll(cosmic)
+				if (HomeSectionType.LIVE_TV in homesections && currentUser.policy?.enableLiveTvAccess == true) {
+					rows.add(HomeFragmentLiveTVRow(requireActivity(), userRepository))
+					rows.add(helper.loadOnNow())
+				}
+			}
+
 			// Actually add the sections
-			for (section in homesections) when (section) {
+			if (cosmic == null) for (section in homesections) when (section) {
 				HomeSectionType.LATEST_MEDIA -> rows.add(helper.loadRecentlyAdded(userViewsRepository.views.first()))
 				HomeSectionType.LIBRARY_TILES_SMALL -> rows.add(HomeFragmentViewsRow(small = false))
 				HomeSectionType.LIBRARY_BUTTONS -> rows.add(HomeFragmentViewsRow(small = true))
@@ -220,8 +239,17 @@ class HomeRowsFragment : RowsSupportFragment(), AudioEventListener, View.OnKeyLi
 		lifecycleScope.launch(Dispatchers.IO) {
 			if (delayed) delay(1.5.seconds)
 
+			if (cosmicRows.isNotEmpty()) {
+				val updates = cosmicHomeRows.refresh(cosmicRows)
+				withContext(Dispatchers.Main) {
+					updates.forEach { (row, items) -> row.update(items) }
+				}
+			}
+
 			repeat(adapter.size()) { i ->
 				val rowAdapter = (adapter[i] as? ListRow)?.adapter as? ItemRowAdapter
+				// Rows with their items already given (the Cosmic home) are refreshed above
+				if (rowAdapter?.queryType == QueryType.StaticItems) return@repeat
 				if (force) rowAdapter?.Retrieve()
 				else rowAdapter?.ReRetrieveIfNeeded()
 			}
